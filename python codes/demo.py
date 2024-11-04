@@ -1,3 +1,0 @@
-a = "punam"
-print(a)
-
