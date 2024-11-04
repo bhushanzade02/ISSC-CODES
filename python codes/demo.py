@@ -1,0 +1,3 @@
+a = "punam"
+print(a)
+
