@@ -4,53 +4,83 @@
 #include "fun.h"
 
 
+Port port_T1 , port_T2 , port_LAN;
 
-Port port_T1, port_T2, port_LAN;
 
-// probability function (return 1 with probability P%)
+
+
+// probability function 
 
 int prob(int P)
 {
-    int N = 100;
-    int k = rand() % N;
-    return ( k < P );
-
+    int N = 100 ;
+    int k = rand() % N ;
+    return (k , P);
 }
 
 
-// TestP1 : sometimes send packages
+// testp1 = sometime send packets 
 void TestP1()
-{
-    // checked if received something 
-    if(port_T1.buf[1][0] > 0)
+ {
+    if(port_T1.buf[1][0] > 0 )
     {
-        printf("test receive packet : ");
-        for(int i =1 ; i<= port_T1.buf[1][0];i++)
+        printf("test recieved packet : ");
+        for(int i =0 ; i <= port_T1.buf[1][0]; i++)
         {
-            printf("%c",port_T1.buf[1][i]);
+            printf("%c", port_T1.buf[1][i]);
         }
-        print("\n");
-        port_T1.buf[1][0]=0;   //clear buffer
+        printf("\n");
+        port_T1.buf[1][0] = 0 ;
     }
 
-
-
-        // with 10 % probability send packet
-    if (prob(10) && port_T1.buf[0][0] == 0)
+    if(prob(10) && port_T1.buf[0][0] == 0)
     {
         Packet p ;
-        strcpy(p.data, "hello From p1");
+        strcpy(p.data , "hello  form P1");
         p.length = strlen(p.data);
         p.smac = 'A';
-        p.net = 7;
+        p.net = 7 ;
+        p.host = 2 ; 
+        p.type = 'D';
 
+
+        printf("TestP1 sent : %s\n",p.data);
+
+        port_T1.buf[0][0] = p.length;
+        for(int i = 1 ; i <= p.length; i++)
+        {
+            port_T1.buf[0][i] = p.data[i-1];
+        }
     }
 
-}
+ }
+
+
+ void TestP2()
+ {
+    if(port_T2.buf[1][0] >  0)
+    {
+        printf("testp2 receivd: ");
+        for(int i =1 ; i <= port_T2.buf[1][0]; i++)
+        {
+            printf("%c", port_T2.buf[1][i]);
+        }
+
+        printf("\n");
+        port_T2.buf[1][0] = 0 ;
+    }
+ }
 
 
 
-
-
-
-
+ void LAN() {
+    if(port_T1.buf[0][0] > 0 && port_T2.buf[1][0]==0)
+    {
+        int len = port_T1.buf[0][0];
+        for(int i =0 ; i <= len ; i++)
+        {
+            port_T2.buf[1][i] = port_T1.buf[0][i];
+        }
+        port_T1.buf[0][0]=0;
+    }
+ }

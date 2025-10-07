@@ -1,7 +1,6 @@
-/* Scheduler */
-//round robin sched
-
 #include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
 #include "param.h"
 #include "fun.h"
 
@@ -9,15 +8,15 @@
 
 int main()
 {
-    while(1){
-        TestP1();
-        TestP2();
-        TestP3();
-        LLL1();
-        LLL2();
-        LLL3();
-        LAN();
-        connectors();
-    }
+
+   srand(time(NULL));
+
+
+   for(int i =0 ; i < 50 ; i++)
+   {
+    TestP1();
+    LAN();
+    TestP2();
+   }
     return 0 ;
 }
