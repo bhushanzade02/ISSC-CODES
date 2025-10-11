@@ -5,18 +5,17 @@
 #include "fun.h"
 
 
-
 int main()
 {
 
    srand(time(NULL));
 
-
-   for(int i =0 ; i < 50 ; i++)
+   for(int i =0 ; i < 100 ; i++)
    {
     TestP1();
-    LAN();
     TestP2();
+    TestP3();
+    LAN();
    }
     return 0 ;
 }
