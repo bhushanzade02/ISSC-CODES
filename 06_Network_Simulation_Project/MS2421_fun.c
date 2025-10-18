@@ -32,9 +32,14 @@ void connectors(Port P1[], Port P2[], int n) {
 void testPStrip(int id, int n) {
     // Receiving packets
     if (TestP[id].buffer[1][0] > 0) {
-        printf(" TestP[%d] received: ", id + 1);
-        for (int j = 1; j <= TestP[id].buffer[1][0]; j++)
+        printf(" TestP[%d] received: [NetID:%d, MachID:%d] ",
+               id + 1,
+               TestP[id].buffer[1][1],
+               TestP[id].buffer[1][2]);
+
+        for (int j = 3; j <= TestP[id].buffer[1][0]; j++)
             printf("%c", TestP[id].buffer[1][j]);
+
         printf("\n");
         TestP[id].buffer[1][0] = 0;
     }
@@ -42,11 +47,11 @@ void testPStrip(int id, int n) {
     // 10% chance to generate a new packet
     if (rand() % 100 < 10) {
         int payload = 13 + rand() % 8;
-        int bc = payload + 3;
+        int bc = payload + 3; // 3 bytes: NetID, MachID, Type
 
         TestP[id].buffer[0][0] = bc;
-        TestP[id].buffer[0][1] = rand() % 10; // Network ID
-        TestP[id].buffer[0][2] = rand() % 10; // Machine ID
+        TestP[id].buffer[0][1] = rand() % 10; // Network ID (numeric)
+        TestP[id].buffer[0][2] = rand() % 10; // Machine ID (numeric)
         TestP[id].buffer[0][3] = 'D';         // Data Type
 
         for (int i = 4; i <= bc; i++)
