@@ -67,7 +67,7 @@ void LLLStrip(int id, int n) {
         int bc = LLL[id].buffer[1][0];
 
         if (!isalpha(LLL[id].buffer[1][1])) {
-            // From upper layer (no MAC header yet)
+         
             int dest;
             do {
                 dest = rand() % n;
